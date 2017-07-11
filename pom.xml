@@ -6,7 +6,9 @@
 
     <groupId>com.tecforce</groupId>
     <artifactId>theater</artifactId>
+    <packaging>war</packaging>
     <version>1.0</version>
+    <name>Theater</name>
 
     <properties>
         <hibernate.version>5.2.6.Final</hibernate.version>
@@ -14,6 +16,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
@@ -75,7 +83,31 @@
             <version>1.2</version>
         </dependency>
 
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat6-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <port>9090</port>
+                    <path>/</path>
+                </configuration>
+
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>

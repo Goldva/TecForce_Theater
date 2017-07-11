@@ -12,8 +12,14 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_session_id_seq")
     @SequenceGenerator(name = "my_session_id_seq", sequenceName = "session_id_seq")
     private long id;
+    @Column(name = "film_id")
+    private long filmId;
     @Column(name = "time")
     private Time time;
+    @Column(name = "hall_id")
+    private long hallId;
+    @Column(name = "price")
+    private int price;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "session_films",
             joinColumns = {@JoinColumn(name = "session_id")},
