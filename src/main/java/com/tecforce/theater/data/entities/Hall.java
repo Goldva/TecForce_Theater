@@ -26,9 +26,9 @@ public class Hall {
     @Column(name = "ratio_vip_place")
     private double ratioVipPlace;
 
-    @ManyToOne(optional=false)
-    @JoinColumn(name="user",referencedColumnName="session_id", insertable=false, updatable=false)
-    private Session session;
+//    @ManyToOne(optional=false)
+//    @JoinColumn(name="user",referencedColumnName="session_id", insertable=false, updatable=false)
+//    private Session session;
 
     public long getId() {
         return id;

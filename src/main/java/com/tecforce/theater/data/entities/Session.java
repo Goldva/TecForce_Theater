@@ -2,7 +2,6 @@ package com.tecforce.theater.data.entities;
 
 import javax.persistence.*;
 import java.sql.Time;
-import java.util.Set;
 
 @Entity
 @Table(name = "sessions")
@@ -20,14 +19,14 @@ public class Session {
     private long hallId;
     @Column(name = "price")
     private int price;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "session_films",
-            joinColumns = {@JoinColumn(name = "session_id")},
-            inverseJoinColumns = {@JoinColumn(name = "film_id")})
-    private Set<Film> film;
-
-    @OneToMany(mappedBy = "sessions")
-    private Set<Hall> halls;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "session_films",
+//            joinColumns = {@JoinColumn(name = "session_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "film_id")})
+//    private Set<Film> film;
+//
+//    @OneToMany(mappedBy = "sessions")
+//    private Set<Hall> halls;
 
 
 
