@@ -63,8 +63,13 @@ public class AppConfig {
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/views/");
-        viewResolver.setSuffix(".jsp");
+
+        viewResolver.setPrefix("");
+        viewResolver.setSuffix("");
+//        viewResolver.setPrefix("/");
+//        viewResolver.setPrefix("/WEB-INF/views/ss//sss/");
+//        viewResolver.setSuffix(".html");
+//        viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
 

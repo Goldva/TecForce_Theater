@@ -29,15 +29,34 @@ public class MainController {
 ////        return "index";
 //    }
 
-    @RequestMapping(value = {"/", "/index"})
+    @RequestMapping(value = {"/", "/index", "/theater"})
     public ModelAndView profile() throws IOException {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("index");
+        System.out.println("sssssssssssssssss");
+        ModelAndView model = new ModelAndView("/index.html");
+
+//        model.setViewName("index.html");
         Film film = new Film();
         film.setDuration(111);
         film.setPrice(35);
         film.setTitle("QQwasdas");
+        System.out.println("dddddddddd");
         filmService.addFilm(film);
+        System.out.println("fffffffffffff");
+        return model;
+    }
+    @RequestMapping(value = {"/qq", "/theater/qq"})
+    public ModelAndView profileqq() throws IOException {
+        System.out.println("sssssssssssssssss");
+        ModelAndView model = new ModelAndView("/WEB-INF/views/sssss/index.jsp");
+
+//        model.setViewName("WEB-INF/views/sssss/index.jsp");
+        Film film = new Film();
+        film.setDuration(111);
+        film.setPrice(35);
+        film.setTitle("QQwasdas");
+        System.out.println("dddddddddd");
+        filmService.addFilm(film);
+        System.out.println("fffffffffffff");
         return model;
     }
 }
