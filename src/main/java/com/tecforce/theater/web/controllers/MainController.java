@@ -44,6 +44,7 @@ public class MainController {
         System.out.println("fffffffffffff");
         return model;
     }
+
     @RequestMapping(value = {"/qq", "/theater/qq"})
     public ModelAndView profileqq() throws IOException {
         System.out.println("sssssssssssssssss");
