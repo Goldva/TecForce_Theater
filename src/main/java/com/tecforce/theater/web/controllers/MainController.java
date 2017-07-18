@@ -32,7 +32,7 @@ public class MainController {
     @RequestMapping(value = {"/", "/index", "/theater"})
     public ModelAndView profile() throws IOException {
         System.out.println("sssssssssssssssss");
-        ModelAndView model = new ModelAndView("/index.html");
+        ModelAndView model = new ModelAndView("/WEB-INF/views/sssss/index.html");
 
 //        model.setViewName("index.html");
         Film film = new Film();
