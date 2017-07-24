@@ -1,0 +1,20 @@
+export  const films = [
+    {
+        "id":52,
+        "title":"QQwasdas",
+        "duration":111,
+        "price":35
+    },
+    {
+        "id":102,
+        "title":"QQwasdas",
+        "duration":111,
+        "price":35
+    },
+    {
+        "id":152,
+        "title":"QQwasdas",
+        "duration":111,
+        "price":35
+    }
+];
