@@ -16,6 +16,22 @@ public class SessionService {
         sessionDao.addSession(session);
     }
 
+    @Transactional
+    public void updateSession(Session session) {
+        sessionDao.updateSession(session);
+    }
+
+    @Transactional
+    public Session getSessionById(long sessionId) {
+        return sessionDao.getSessionById(sessionId);
+    }
+
+    @Transactional
+    public Session getSession(Session session) {
+        Session result = sessionDao.getSession(session);
+        return result;
+    }
+
 //    public Collection getAllSessions() {
 //        return sessionFactory.getCriteriaBuilder().createQuery(Session.class).list();
 //    }

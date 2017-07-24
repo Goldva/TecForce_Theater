@@ -1,7 +1,9 @@
 package com.tecforce.theater.data.entities;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 @Entity
 @Table(name = "hall")
@@ -9,26 +11,23 @@ public class Hall {
     @Id
     @Column(name = "hall_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_hall_id_seq")
-    @SequenceGenerator(name = "my_hall_id_seq", sequenceName = "hall_id_seq")
+    @SequenceGenerator(name = "my_hall_id_seq", sequenceName = "hall_id_seq", allocationSize = 1)
     private long id;
     @Column(name = "hall_name")
     private String hallName;
-    @ElementCollection
-    @CollectionTable(name = "ordinaryPlace", joinColumns = @JoinColumn(name = "ordinary_places_id"))
-    @Column(name = "ordinary_place")
-    private List<Integer> ordinaryPlace;
-    @ElementCollection
-    @CollectionTable(name = "vipPlace", joinColumns = @JoinColumn(name = "vip_places_id"))
-    @Column(name = "vip_place")
-    private List<Integer> vipPlace;
     @Column(name = "ratio_ordinary_place")
     private double ratioOrdinaryPlace;
     @Column(name = "ratio_vip_place")
     private double ratioVipPlace;
 
-//    @ManyToOne(optional=false)
-//    @JoinColumn(name="user",referencedColumnName="session_id", insertable=false, updatable=false)
-//    private Session session;
+    @ManyToMany(
+            mappedBy = "halls",
+            fetch = FetchType.EAGER
+    )
+    private Set<Session> sessions = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hallPlace")
+    private Set<Place> places = new HashSet<>();
 
     public long getId() {
         return id;
@@ -40,22 +39,6 @@ public class Hall {
 
     public void setHallName(String hallName) {
         this.hallName = hallName;
-    }
-
-    public List<Integer> getOrdinaryPlace() {
-        return ordinaryPlace;
-    }
-
-    public void setOrdinaryPlace(List<Integer> ordinaryPlace) {
-        this.ordinaryPlace = ordinaryPlace;
-    }
-
-    public List<Integer> getVipPlace() {
-        return vipPlace;
-    }
-
-    public void setVipPlace(List<Integer> vipPlace) {
-        this.vipPlace = vipPlace;
     }
 
     public double getRatioOrdinaryPlace() {
@@ -72,5 +55,64 @@ public class Hall {
 
     public void setRatioVipPlace(double ratioVipPlace) {
         this.ratioVipPlace = ratioVipPlace;
+    }
+
+//    public void addPlace(int countPlace){
+//        for (int i = 1; i <= countPlace; i++) {
+//            Place place = new Place();
+//            place.setPlace(i);
+//            place.setHallId(getId());
+//            place.setHallPlace(this);
+//            places.add(place);
+//        }
+//    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Hall hall = (Hall) o;
+
+        return hallName != null ? hallName.equals(hall.hallName) : hall.hallName == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return hallName != null ? hallName.hashCode() : 0;
+    }
+
+    public boolean getTypePlace(int numberPlace){
+        Place needPlace = new Place();
+        needPlace.setHallId(getId());
+        needPlace.setPlace(numberPlace);
+        Iterator<Place> iterator = places.iterator();
+        while (iterator.hasNext()){
+            Place place = iterator.next();
+            if(needPlace.equals(place)){
+                return place.isVipPlace();
+            }
+        }
+        return false;                                           //TODO: Написать и кидать Exception
+    }
+
+    public double getRatio(int numberPlace){
+        Place searchPlace = new Place();
+        searchPlace.setHallId(getId());
+        searchPlace.setPlace(numberPlace);
+        Place result = null;
+        Iterator<Place> iterator = places.iterator();
+        while (iterator.hasNext()){
+            result = iterator.next();
+            if (result.equals(searchPlace)){
+                break;
+            }
+        }
+        if (result.isVipPlace()){
+            return getRatioVipPlace();
+        }else {
+            return getRatioOrdinaryPlace();
+        }
     }
 }

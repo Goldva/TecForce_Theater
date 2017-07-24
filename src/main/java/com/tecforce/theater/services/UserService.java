@@ -16,6 +16,11 @@ public class UserService {
         userDao.addUser(user);
     }
 
+    @Transactional
+    public User getUserById(long userId) {
+        return userDao.getUserById(userId);
+    }
+
 //    public Collection getAllUsers() {
 //        return sessionFactory.getCriteriaBuilder().createQuery(User.class).list();
 //    }

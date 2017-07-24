@@ -1,6 +1,6 @@
 package com.tecforce.theater.dao;
 
-import com.tecforce.theater.data.entities.Session;
+import com.tecforce.theater.data.entities.Place;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,46 +13,38 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Repository
-public class SessionDao {
+public class PlaceDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void addSession(Session session) {
-        sessionFactory.getCurrentSession().save(session);
+    public void addPlace(Place place) {
+        sessionFactory.getCurrentSession().save(place);
     }
 
-    public void updateSession(Session session) {
-        sessionFactory.getCurrentSession().update(session);
-    }
-
-    public Session getSessionById(long sessionId) {
-        return sessionFactory.getCurrentSession().get(Session.class, sessionId);
-    }
-
-    public Session getSession(Session session) {
+    public Place getPlace(Place place) {
         CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
-        CriteriaQuery<Session> criteria = builder.createQuery(Session.class);
-        Root<Session> root = criteria.from(Session.class);
+        CriteriaQuery<Place> criteria = builder.createQuery(Place.class);
+        Root<Place> root = criteria.from(Place.class);
 
         List<Predicate> predList = new LinkedList<>();
-        predList.add(builder.equal(root.get("filmId"), session.getFilmId()));
-        predList.add(builder.equal(root.get("time"), session.getTime()));
+        predList.add(builder.equal(root.get("place"), place.getPlace()));
+        predList.add(builder.equal(root.get("hall_id"), place.getHallId()));
         Predicate[] predArray = new Predicate[predList.size()];
         predList.toArray(predArray);
 
         criteria.select(root).where(predArray);
 
-        List<Session> result = sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
+        List<Place> result = sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
         return result.size() == 0 ? null : result.get(0);
     }
-
 
 //    public Collection getAllSessions() {
 //        return sessionFactory.getCriteriaBuilder().createQuery(Session.class).list();
 //    }
 
-    public void deleteSession(Session session) {
-        sessionFactory.getCurrentSession().delete(session);
+    public void deletePlace(Place place) {
+        sessionFactory.getCurrentSession().delete(place);
     }
+
 
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class FilmService {
     @Autowired
@@ -16,10 +18,15 @@ public class FilmService {
         filmDao.addFilm(film);
     }
 
-//    @Transactional
-//    public Collection getAllFilms() {
-//        return sessionFactory.getCriteriaBuilder().createQuery(Film.class).list();
-//    }
+    @Transactional
+    public Film getFilmById(long filmId) {
+        return filmDao.getFilmById(filmId);
+    }
+
+    @Transactional
+    public List<Film> getAllFilms() {
+        return filmDao.getAllFilms();
+    }
 
     @Transactional
     public void deleteFilm(Film film) {

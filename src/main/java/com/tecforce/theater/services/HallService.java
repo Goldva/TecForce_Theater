@@ -16,6 +16,16 @@ public class HallService {
         hallDao.addHall(hall);
     }
 
+    @Transactional
+    public void updateHall(Hall hall) {
+        hallDao.updateHall(hall);
+    }
+
+    @Transactional
+    public Hall getHallById(long hallId) {
+        return hallDao.getHallById(hallId);
+    }
+
 //    public Collection getAllHalls() {
 //        return sessionFactory.getCriteriaBuilder().createQuery(Hall.class).list();
 //    }

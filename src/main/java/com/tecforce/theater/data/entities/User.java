@@ -8,7 +8,7 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_user_id_seq")
-    @SequenceGenerator(name = "my_user_id_seq", sequenceName = "user_id_seq")
+    @SequenceGenerator(name = "my_user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
     private long id;
     @Column(name = "login")
     private String login;
