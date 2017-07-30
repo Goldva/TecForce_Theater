@@ -1,8 +1,9 @@
 package com.tecforce.theater.data.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Hall {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_hall_id_seq")
     @SequenceGenerator(name = "my_hall_id_seq", sequenceName = "hall_id_seq", allocationSize = 1)
     private long id;
-    @Column(name = "hall_name")
+    @Column(name = "hall_name", unique = true)
     private String hallName;
     @Column(name = "ratio_ordinary_place")
     private double ratioOrdinaryPlace;
@@ -24,10 +25,16 @@ public class Hall {
             mappedBy = "halls",
             fetch = FetchType.EAGER
     )
+    @JsonIgnore
     private Set<Session> sessions = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "hallPlace")
     private Set<Place> places = new HashSet<>();
+
+    @Transient
+    private double vipPrice;
+    @Transient
+    private double ordinaryPrice;
 
     public long getId() {
         return id;
@@ -57,16 +64,35 @@ public class Hall {
         this.ratioVipPlace = ratioVipPlace;
     }
 
-//    public void addPlace(int countPlace){
-//        for (int i = 1; i <= countPlace; i++) {
-//            Place place = new Place();
-//            place.setPlace(i);
-//            place.setHallId(getId());
-//            place.setHallPlace(this);
-//            places.add(place);
-//        }
-//    }
+    public Set<Place> getPlaces() {
+        return places;
+    }
 
+    public double getVipPrice() {
+        return vipPrice;
+    }
+
+    public void setVipPrice(double vipPrice) {
+        this.vipPrice = vipPrice * getRatioVipPlace();
+    }
+
+    public void applyStock(double stock){
+        ordinaryPrice *= stock;
+        vipPrice *= stock;
+
+    }
+
+    public double getPriceForPlace(boolean isVip){
+        return isVip ? vipPrice : ordinaryPrice;
+    }
+
+    public double getOrdinaryPrice() {
+        return ordinaryPrice;
+    }
+
+    public void setOrdinaryPrice(double ordinaryPrice) {
+        this.ordinaryPrice = ordinaryPrice * getRatioOrdinaryPlace();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -87,10 +113,8 @@ public class Hall {
         Place needPlace = new Place();
         needPlace.setHallId(getId());
         needPlace.setPlace(numberPlace);
-        Iterator<Place> iterator = places.iterator();
-        while (iterator.hasNext()){
-            Place place = iterator.next();
-            if(needPlace.equals(place)){
+        for (Place place : places) {
+            if (needPlace.equals(place)) {
                 return place.isVipPlace();
             }
         }
@@ -102,10 +126,9 @@ public class Hall {
         searchPlace.setHallId(getId());
         searchPlace.setPlace(numberPlace);
         Place result = null;
-        Iterator<Place> iterator = places.iterator();
-        while (iterator.hasNext()){
-            result = iterator.next();
-            if (result.equals(searchPlace)){
+        for (Place place : places) {
+            result = place;
+            if (result.equals(searchPlace)) {
                 break;
             }
         }

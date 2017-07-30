@@ -1,0 +1,10 @@
+<div class="film-item">
+    <ul class="films">
+        <li *ngFor="let film of films"
+            [class.selected]="film === selectedFilm"
+            (click)="onSelect(film)">
+            <span class="badge">{{film.id}}</span>{{film.title}}
+        </li>
+    </ul>
+
+</div>

@@ -1,5 +1,7 @@
 package com.tecforce.theater.data.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.HashSet;
@@ -24,6 +26,7 @@ public class Session {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="film_id",referencedColumnName="film_id", insertable=false, updatable=false)
+    @JsonIgnore
     private Film film;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -52,7 +55,8 @@ public class Session {
         this.time = time;
     }
 
-    public int getPrice() {
+    @JsonIgnore
+    public double getPrice() {
         return film.getPrice();
     }
 
@@ -81,5 +85,7 @@ public class Session {
         }
         return result;
     }
+
+
 
 }

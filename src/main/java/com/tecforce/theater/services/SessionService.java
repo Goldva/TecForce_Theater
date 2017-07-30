@@ -1,10 +1,13 @@
 package com.tecforce.theater.services;
 
 import com.tecforce.theater.dao.SessionDao;
+import com.tecforce.theater.data.entities.Film;
 import com.tecforce.theater.data.entities.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class SessionService {
@@ -32,9 +35,15 @@ public class SessionService {
         return result;
     }
 
-//    public Collection getAllSessions() {
-//        return sessionFactory.getCriteriaBuilder().createQuery(Session.class).list();
-//    }
+    @Transactional
+    public List<Session> getAllSessions() {
+        return sessionDao.getAllSessions();
+    }
+
+    @Transactional
+    public List<Session> getAllSessionsForFilm(Film film) {
+        return sessionDao.getAllSessionsForFilm(film);
+    }
 
     @Transactional
     public void deleteSession(Session session) {

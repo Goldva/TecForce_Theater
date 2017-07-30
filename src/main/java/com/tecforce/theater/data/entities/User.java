@@ -10,8 +10,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_user_id_seq")
     @SequenceGenerator(name = "my_user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
     private long id;
-    @Column(name = "login")
-    private String login;
+    @Column(name = "username")
+    private String username;
     @Column(name = "password")
     private String password;
     @Column(name = "birthday")
@@ -21,12 +21,12 @@ public class User {
         return id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

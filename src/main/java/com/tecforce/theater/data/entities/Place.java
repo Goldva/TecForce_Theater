@@ -1,5 +1,7 @@
 package com.tecforce.theater.data.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -22,6 +24,7 @@ public class Place {
 
     @ManyToOne(optional=false)
     @JoinColumn(name="hall_id",referencedColumnName="hall_id", insertable=false, updatable=false)
+    @JsonIgnore
     private Hall hallPlace;
 
     @Override

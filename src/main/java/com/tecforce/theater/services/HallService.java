@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class HallService {
     @Autowired
@@ -26,9 +28,10 @@ public class HallService {
         return hallDao.getHallById(hallId);
     }
 
-//    public Collection getAllHalls() {
-//        return sessionFactory.getCriteriaBuilder().createQuery(Hall.class).list();
-//    }
+    @Transactional
+    public List<Hall> getAllHalls() {
+        return hallDao.getAllHalls();
+    }
 
     @Transactional
     public void deleteHall(Hall hall) {

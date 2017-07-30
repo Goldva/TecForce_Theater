@@ -1,0 +1,18 @@
+<div class="hall-list">
+    <ul class="halls">
+        <li *ngFor="let hall of halls"
+            [class.selected]="hall === selectedHall"
+            (click)="onSelect(hall)">
+            <div>
+                <span class="badge">{{hall.id}}</span>{{hall.hallName}}
+                <div>
+                    <label>Цена на обычные места: </label>{{hall.ordinaryPrice}} рублей
+                </div>
+                <div>
+                    <label>Цена на VIP места: </label>{{hall.vipPrice}} рублей
+
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

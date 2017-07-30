@@ -1,19 +1,19 @@
 export  const films = [
     {
-        "id":52,
+        "id":1,
+        "title":"asdasd",
+        "duration":111,
+        "price":35
+    },
+    {
+        "id":2,
         "title":"QQwasdas",
         "duration":111,
         "price":35
     },
     {
-        "id":102,
-        "title":"QQwasdas",
-        "duration":111,
-        "price":35
-    },
-    {
-        "id":152,
-        "title":"QQwasdas",
+        "id":3,
+        "title":"xcvxcvx",
         "duration":111,
         "price":35
     }

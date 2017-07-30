@@ -21,6 +21,11 @@ public class UserService {
         return userDao.getUserById(userId);
     }
 
+    @Transactional
+    public User getUserByLogin(String login) {
+        return userDao.getUserByLogin(login);
+    }
+
 //    public Collection getAllUsers() {
 //        return sessionFactory.getCriteriaBuilder().createQuery(User.class).list();
 //    }
@@ -30,4 +35,14 @@ public class UserService {
         userDao.deleteUser(user);
     }
 
+    @Transactional
+    public User authenticate(User user){
+        User searchUser = getUserByLogin(user.getUsername());
+        if (searchUser == null)
+            return null;
+        if (user.getPassword().equals(searchUser.getPassword())){
+            return searchUser;
+        }
+        return null;
+    }
 }

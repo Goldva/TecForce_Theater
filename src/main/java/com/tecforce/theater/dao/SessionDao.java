@@ -1,5 +1,6 @@
 package com.tecforce.theater.dao;
 
+import com.tecforce.theater.data.entities.Film;
 import com.tecforce.theater.data.entities.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +47,25 @@ public class SessionDao {
         return result.size() == 0 ? null : result.get(0);
     }
 
+    public List<Session> getAllSessionsForFilm(Film film) {
+        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<Session> criteria = builder.createQuery(Session.class);
+        Root<Session> root = criteria.from(Session.class);
 
-//    public Collection getAllSessions() {
-//        return sessionFactory.getCriteriaBuilder().createQuery(Session.class).list();
-//    }
+        criteria.select(root).where(builder.equal(root.get("filmId"), film.getId()));
+
+        return sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
+    }
+
+
+    public List<Session> getAllSessions() {
+        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<Session> criteria = builder.createQuery(Session.class);
+        Root<Session> contactRoot = criteria.from(Session.class);
+        criteria.select(contactRoot);
+
+        return sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
+    }
 
     public void deleteSession(Session session) {
         sessionFactory.getCurrentSession().delete(session);

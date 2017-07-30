@@ -5,6 +5,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
+
 @Repository
 public class HallDao {
     @Autowired
@@ -22,9 +27,14 @@ public class HallDao {
         return sessionFactory.getCurrentSession().get(Hall.class, hallId);
     }
 
-//    public Collection getAllHalls() {
-//        return sessionFactory.getCriteriaBuilder().createQuery(Hall.class).list();
-//    }
+    public List<Hall> getAllHalls() {
+        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<Hall> query = builder.createQuery(Hall.class);
+        Root<Hall> root = query.from(Hall.class);
+        query.select(root);
+
+        return sessionFactory.getCurrentSession().createQuery(query).getResultList();
+    }
 
     public void deleteHall(Hall hall) {
         sessionFactory.getCurrentSession().delete(hall);

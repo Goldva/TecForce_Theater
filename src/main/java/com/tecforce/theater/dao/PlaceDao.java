@@ -21,6 +21,10 @@ public class PlaceDao {
         sessionFactory.getCurrentSession().save(place);
     }
 
+    public Place getPlaceById(long placeId) {
+        return sessionFactory.getCurrentSession().get(Place.class, placeId);
+    }
+
     public Place getPlace(Place place) {
         CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
         CriteriaQuery<Place> criteria = builder.createQuery(Place.class);
@@ -38,9 +42,14 @@ public class PlaceDao {
         return result.size() == 0 ? null : result.get(0);
     }
 
-//    public Collection getAllSessions() {
-//        return sessionFactory.getCriteriaBuilder().createQuery(Session.class).list();
-//    }
+    public List<Place> getAllPlaces() {
+        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<Place> query = builder.createQuery(Place.class);
+        Root<Place> root = query.from(Place.class);
+        query.select(root);
+
+        return sessionFactory.getCurrentSession().createQuery(query).getResultList();
+    }
 
     public void deletePlace(Place place) {
         sessionFactory.getCurrentSession().delete(place);

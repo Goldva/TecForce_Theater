@@ -1,0 +1,22 @@
+<div class="tickets-list">
+    <table class="tickets">
+        <tr>
+            <th>Username</th>
+            <th>Фильм</th>
+            <th>Сессия</th>
+            <th>Зал</th>
+            <th>Место</th>
+            <th>Цена</th>
+        </tr>
+        <tr *ngFor="let ticket of tickets.values()">
+            <th *ngIf="user">{{user.username}}</th>
+            <th *ngIf="user === null">{{'Гость'}}</th>
+            <th>{{ticket.film.title}}</th>
+            <th>{{ticket.session.time}}</th>
+            <th>{{ticket.hall.hallName}}</th>
+            <th>{{ticket.place.place}}</th>
+            <th>{{ticket.price}}</th>
+        </tr>
+    </table>
+    <button class="buyTickets" (click)="buyTickets()">Купить</button>
+</div>

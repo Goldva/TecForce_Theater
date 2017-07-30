@@ -1,23 +1,41 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
-import { HttpModule } from '@angular/http'
+import { HttpModule } from '@angular/http';
+import {RouterModule} from '@angular/router';
 
+import { routes } from './app.routes'
 import { AppComponent }   from './app.component';
-import { TableFilmsComponent } from './films/table-films.component'
-import { FilmsService } from "./shared/films.service"
+import { PosterModule} from './poster/poster.module';
+
+import { AlertComponent } from './alerts/alert.component';
+import { AuthGuard } from './shared/services/guard/auth.guard';
+// import { AuthenticationService, UserService } from './shared/services/index';
+import { AlertService, AuthenticationService, UserService } from './shared/services/index';
+import { LoginComponent } from './login/login.component';
+
 
 @NgModule({
     imports:      [
         BrowserModule,
         FormsModule,
-        HttpModule
+        HttpModule,
+        RouterModule.forRoot(routes),
+        PosterModule
     ],
     declarations: [
         AppComponent,
-        TableFilmsComponent
+        LoginComponent,
+        AlertComponent
     ],
-    providers: [FilmsService],
-    bootstrap:    [ AppComponent ]
+    providers: [
+        AuthGuard,
+        AlertService,
+        AuthenticationService,
+        UserService
+    ],
+    bootstrap:    [
+        AppComponent
+    ]
 })
 export class AppModule { }

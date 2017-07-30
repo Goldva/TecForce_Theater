@@ -1,0 +1,8 @@
+<main>
+    <h1>{{title}}</h1>
+    <table-film (selectFilm)="selectFilm($event)"></table-film>
+    <sessions-list *ngIf="sessions" (selectSession)="selectSession($event)" [sessions]="sessions"></sessions-list>
+    <hall-list *ngIf="halls" (selectHall)="selectHall($event)" [halls]="halls"></hall-list>
+    <places-list *ngIf="places" (selectPlace)="selectPlace($event)" [places]="places"></places-list>
+    <ticket-table *ngIf="tickets.size > 0" [tickets]="tickets"></ticket-table>
+</main>

@@ -1,0 +1,11 @@
+<div class="places-list">
+    <ul class="places">
+        <li *ngFor="let place of places"
+            [class.vip]="place.vipPlace && !selectedPlaces.has(place)"
+            [class.selected_vip]="place.vipPlace && selectedPlaces.has(place)"
+            [class.selected]="selectedPlaces.has(place) && !place.vipPlace"
+            (click)="onSelect(place)">
+            <span></span>{{place.place}}
+        </li>
+    </ul>
+</div>

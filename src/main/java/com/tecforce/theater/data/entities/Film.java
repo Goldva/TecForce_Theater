@@ -1,6 +1,8 @@
 package com.tecforce.theater.data.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "films")
@@ -15,10 +17,10 @@ public class Film {
     @Column(name = "duration")
     private long duration;
     @Column(name = "price")
-    private int price;
+    private double price;
 
-//    @ManyToMany(mappedBy = "films")
-//    private Set<Session> sessions = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "film")
+    private Set<Session> sessions = new HashSet<>();
 
     public long getId() {
         return id;
@@ -40,19 +42,15 @@ public class Film {
         this.duration = duration;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-//    public Set<Session> getSessions() {
-//        return sessions;
-//    }
-//
-//    public void setSessions(Set<Session> sessions) {
-//        this.sessions = sessions;
-//    }
+    public Set<Session> getSessions() {
+        return sessions;
+    }
 }

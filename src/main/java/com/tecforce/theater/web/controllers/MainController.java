@@ -17,7 +17,7 @@ public class MainController {
 //        model.setViewName("index.html");
 //        Film film = new Film();
 //        film.setDuration(111);
-//        film.setPrice(35);
+//        film.setPrices(35);
 //        film.setTitle("QQwasdas");
 //        filmService.addFilm(film);
         return model;
