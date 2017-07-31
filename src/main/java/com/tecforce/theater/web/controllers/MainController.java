@@ -26,13 +26,11 @@ public class MainController {
 
     @RequestMapping(value = {"/start/{fileJS}"})
     public ModelAndView fileJS(@PathVariable String fileJS) throws IOException {
-        ModelAndView model = new ModelAndView(fileJS + ".js");
-        return model;
+        return new ModelAndView(fileJS + ".js");
     }
 
     @RequestMapping(value = {"/start/css/{fileCSS}"})
     public ModelAndView fileCSS(@PathVariable String fileCSS) throws IOException {
-        ModelAndView model = new ModelAndView("css/" + fileCSS + ".css");
-        return model;
+        return new ModelAndView("css/" + fileCSS + ".css");
     }
 }
