@@ -2,36 +2,26 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { PosterComponent } from './poster.component'
+import { ListWithDataModule } from '../lists-with-data/list.with.data.module'
+import { EditorReloadService } from "../shared/services/editors/editor.reload.service"
 
-import { TableFilmsComponent } from './films/table-films.component'
-import { SessionsListComponent } from './sessions/sessions-list.component'
-import { HallComponent } from './halls/hall.component'
-import {PlacesListComponent} from "./places/places-list.component";
-import {SelectedTicketsComponent} from "./tickets/selected.tickets.component";
-
-
-import { FilmsService } from '../shared/services/films.service'
-import { SessionsService } from '../shared/services/session.service'
-import { HallService } from '../shared/services/hall.service'
-import {PlaceService} from "../shared/services/place.service";
-import {TicketService} from "../shared/services/ticket.service";
+import { FilmsService, SessionsService, HallService, PlaceService, TicketService} from '../shared/services/index'
 
 @NgModule({
-    imports: [BrowserModule],
+    imports: [
+        BrowserModule,
+        ListWithDataModule
+    ],
     declarations: [
-        PosterComponent,
-        TableFilmsComponent,
-        SessionsListComponent,
-        HallComponent,
-        PlacesListComponent,
-        SelectedTicketsComponent
+        PosterComponent
     ],
     providers: [
         FilmsService,
         SessionsService,
         HallService,
         PlaceService,
-        TicketService
+        TicketService,
+        EditorReloadService
     ]
 })
 

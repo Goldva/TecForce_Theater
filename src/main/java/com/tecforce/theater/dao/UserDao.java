@@ -34,9 +34,14 @@ public class UserDao {
         return result.size() == 0 ? null : result.get(0);
     }
 
-//    public Collection getAllUsers() {
-//        return sessionFactory.getCriteriaBuilder().createQuery(User.class).list();
-//    }
+    public List<User> getAllUsers() {
+        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        Root<User> contactRoot = criteria.from(User.class);
+        criteria.select(contactRoot);
+
+        return sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
+    }
 
     public void deleteUser(User user) {
         sessionFactory.getCurrentSession().delete(user);

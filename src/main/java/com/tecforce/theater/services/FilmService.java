@@ -1,5 +1,6 @@
 package com.tecforce.theater.services;
 
+import com.tecforce.theater.annotations.Films;
 import com.tecforce.theater.dao.FilmDao;
 import com.tecforce.theater.data.entities.Film;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Films
 public class FilmService {
     @Autowired
-    private FilmDao filmDao;
+    private FilmDao filmDao = new FilmDao();
 
     @Transactional
     public void addFilm(Film film) {
@@ -29,8 +31,13 @@ public class FilmService {
     }
 
     @Transactional
-    public void deleteFilm(Film film) {
-        filmDao.deleteFilm(film);
+    public void updateFilm(Film film) {
+        filmDao.updateFilm(film);
+    }
+
+    @Transactional
+    public void deleteFilm(long filmId) {
+        filmDao.deleteFilm(filmId);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.tecforce.theater.dao;
 
+import com.tecforce.theater.annotations.Films;
 import com.tecforce.theater.data.entities.Film;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,8 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class FilmDao {
+@Films
+public class FilmDao{
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -32,8 +34,15 @@ public class FilmDao {
         return sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
     }
 
-    public void deleteFilm(Film film) {
-        sessionFactory.getCurrentSession().delete(film);
+    public void updateFilm(Film film) {
+        sessionFactory.getCurrentSession().update(film);
+    }
+
+    public void deleteFilm(long filmId) {
+        Film film = getFilmById(filmId);
+        if (film != null) {
+            sessionFactory.getCurrentSession().delete(film);
+        }
     }
 
 }

@@ -5,7 +5,7 @@ import 'rxjs/operator/map'
 import 'rxjs/operator/catch'
 import 'rxjs/Observable/throw'
 
-import {Ticket} from "../ticket";
+import {Ticket} from "../entities/ticket";
 
 @Injectable()
 export class TicketService{
@@ -23,7 +23,7 @@ export class TicketService{
     postBuyTickets(tickets: Ticket[]): Observable<Ticket>{
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers});
-        return this.http.post('buyTicket', tickets, options)
+        return this.http.post('buyTicket', JSON.stringify(tickets), options)
             .map(res => res.json())
             .catch(this.handleError);
     }

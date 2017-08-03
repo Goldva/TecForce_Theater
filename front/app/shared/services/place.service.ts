@@ -5,9 +5,9 @@ import 'rxjs/operator/map'
 import 'rxjs/operator/catch'
 import 'rxjs/Observable/throw'
 
-import {Place} from "../place";
+import {Place} from "../entities/place";
 import {places} from "../datatest/data-places";
-import {Hall} from "../hall";
+import {Hall} from "../entities/hall";
 
 @Injectable()
 export class PlaceService{

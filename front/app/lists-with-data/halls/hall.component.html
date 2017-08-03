@@ -1,0 +1,19 @@
+<div class="hall-list">
+    <ul class="halls">
+        <li *ngFor="let hall of halls"
+            [class.selected]="hall === selectedHall"
+            (click)="onSelect(hall)">
+            <div>
+                <span class="badge">{{hall.id}}</span>{{hall.hallName}}
+                <div>
+                    <label *ngIf="session">Цена на обычные места: {{hall.ordinaryPrice}} рублей</label>
+                    <label *ngIf="!session">Ставка на обычные: {{hall.ratioOrdinaryPlace}} рублей</label>
+                </div>
+                <div>
+                    <label *ngIf="session">Цена на VIP места: {{hall.vipPrice}} рублей</label>
+                    <label *ngIf="!session">Ставка на VIP: {{hall.ratioVipPlace}} рублей</label>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

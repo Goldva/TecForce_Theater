@@ -1,7 +1,5 @@
 package com.tecforce.theater.web.controllers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tecforce.theater.data.entities.Ticket;
 import com.tecforce.theater.data.entities.User;
 import com.tecforce.theater.services.PricesService;
@@ -28,23 +26,16 @@ public class TicketsController {
     private StatisticService statisticService;
 
     @RequestMapping(value = {"/ticketsSelection"})
-    public @ResponseBody String ticketsSelection(@RequestBody String jsonReq) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        Ticket ticket = mapper.readValue(jsonReq, Ticket.class);
-        User user = userService.getUserById(ticket.getUserId());
-
-        ticket = pricesService.getTicketWithRandomStock(ticket, user);
-
-        return mapper.writeValueAsString(ticket);
+    public @ResponseBody Ticket ticketsSelection(@RequestBody Ticket ticket) throws IOException {
+        User user = null;
+        if (ticket.getUserId() != -1) {
+            user = userService.getUserById(ticket.getUserId());
+        }
+        return pricesService.getTicketWithRandomStock(ticket, user);
     }
 
     @RequestMapping(value = {"/buyTicket"})
-    public void buyTicket(@RequestBody String jsonReq) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        Set<Ticket> tickets = mapper.readValue(jsonReq, new TypeReference<Set<Ticket>>(){});
-
+    public void buyTicket(@RequestBody Set<Ticket> tickets) throws IOException {
         statisticService.addStatistics(tickets);
     }
 }

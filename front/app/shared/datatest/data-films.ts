@@ -8,13 +8,13 @@ export  const films = [
     {
         "id":2,
         "title":"QQwasdas",
-        "duration":111,
-        "price":35
+        "duration":22,
+        "price":44
     },
     {
         "id":3,
         "title":"xcvxcvx",
-        "duration":111,
-        "price":35
+        "duration":66,
+        "price":2235
     }
 ];

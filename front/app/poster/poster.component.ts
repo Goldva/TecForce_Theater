@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { Film } from '../shared/film';
-import {Session} from "../shared/session";
-import {Hall} from "../shared/hall";
-import {Place} from "../shared/place";
-import {Ticket} from "../shared/ticket";
+import { Film } from '../shared/entities/film';
+import {Session} from "../shared/entities/session";
+import {Hall} from "../shared/entities/hall";
+import {Place} from "../shared/entities/place";
+import {Ticket} from "../shared/entities/ticket";
 import {TicketService} from "../shared/services/ticket.service";
 import {SessionsService} from "../shared/services/session.service";
 import {HallService} from "../shared/services/hall.service";
@@ -14,6 +14,9 @@ import {List} from "lodash";
 import LinkedList from "typescript-collections/dist/lib/LinkedList";
 import {sessions} from "../shared/datatest/data-sessions";
 import {places} from "../shared/datatest/data-places";
+import {User} from "../shared/entities/user";
+import {tick} from "@angular/core/testing";
+import {EditorReloadService} from "../shared/services/index";
 
 @Component({
     selector: 'poster',
@@ -24,52 +27,57 @@ import {places} from "../shared/datatest/data-places";
 export class PosterComponent {
     title: string = 'Poster';
 
-    constructor(private ticketService: TicketService,
-                private sessionService: SessionsService,
-                private hallService: HallService,
-                private placeService: PlaceService
-    ){}
+    constructor(private ticketService: TicketService){}
 
-    sessions: Session[];
-    halls: Hall[];
-    places: Place[];
+    film: Film;
+    session: Session;
+    hall: Hall;
+    user: User;
+
 
     ticket: Ticket = new Ticket;
 
     tickets = new Map<number, Ticket>();
 
     selectFilm(film: Film){
-        this.halls = undefined;
-        this.places = undefined;
-        this.ticket.film = film;
-        // this.sessions = this.sessionService.getFilmSessionsTest();
-        this.sessionService.postSearchSessionsForFilm(film).subscribe(sessions => {
-            this.sessions = sessions});
-
+        this.film = undefined;
+        this.session = undefined;
+        this.hall = undefined;
+        if(film) {
+            console.log(film);
+            this.film = film;
+            this.ticket.film = film;
+        }
     }
 
     selectSession(session: Session){
-        this.ticket.session = session;
-        this.ticket.sessionId = session.id;
-        this.places = undefined;
-        // this.halls = this.hallService.getHallTest();
-        this.hallService.postSearchHallsForSession(session).subscribe(halls => {
-            this.halls = halls});
-
+        this.session = undefined;
+        this.hall = undefined;
+        if(session) {
+            this.session = session;
+            this.ticket.session = session;
+            this.ticket.sessionId = session.id;
+        }
     }
 
     selectHall(hall: Hall){
-        this.ticket.hall = hall;
-        this.ticket.hallId = hall.id;
-        // this.places = this.placeService.getPlacesTest();
-        this.placeService.postSearchPlacesForHall(hall).subscribe(places => {
-            this.places = places;});
+        this.hall = undefined;
+        if(hall) {
+            this.hall = hall;
+            this.ticket.hall = hall;
+            this.ticket.hallId = hall.id;
+        }
     }
 
     selectPlace(place: Place){
         this.ticket.place = place;
         this.ticket.placeId = place.id;
-        this.ticket.userId = 1;
+        this.user = JSON.parse(localStorage.getItem("currentUser"));
+        if(this.user) {
+            this.ticket.userId = this.user.id;
+        }else {
+            this.ticket.userId = -1;
+        }
         if (this.tickets.has(place.id)){
             this.tickets.delete(place.id)
         }else {

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 @Entity
@@ -71,21 +70,5 @@ public class Session {
     public void addHall(Hall hall){
         getHalls().add(hall);
     }
-
-    public Hall getHall(String hallName){
-        Hall searchHall = new Hall();
-        searchHall.setHallName(hallName);
-        Hall result = null;
-        Iterator<Hall> iterator = halls.iterator();
-        while (iterator.hasNext()){
-            result = iterator.next();
-            if (result.equals(searchHall)){
-                break;
-            }
-        }
-        return result;
-    }
-
-
 
 }

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import {Ticket} from "../../shared/ticket";
-import {User} from "../../shared/user";
+import {Ticket} from "../../shared/entities/ticket";
+import {User} from "../../shared/entities/user";
 import {TicketService} from "../../shared/services/ticket.service";
 
 @Component({

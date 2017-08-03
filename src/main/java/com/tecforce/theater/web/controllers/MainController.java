@@ -13,13 +13,6 @@ public class MainController {
     @RequestMapping(value = {"/"})
     public ModelAndView profile() throws IOException {
         ModelAndView model = new ModelAndView("index.html");
-
-//        model.setViewName("index.html");
-//        Film film = new Film();
-//        film.setDuration(111);
-//        film.setPrices(35);
-//        film.setTitle("QQwasdas");
-//        filmService.addFilm(film);
         return model;
     }
 

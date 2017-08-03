@@ -1,0 +1,20 @@
+<main>
+    <h1>Список пользователей и статистика</h1>
+
+    <table class="tickets">
+        <tr>
+            <th>User id</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Birthday</th>
+            <th>Role</th>
+        </tr>
+        <tr *ngFor="let user of users">
+            <th>{{user.id}}</th>
+            <th>{{user.username}}</th>
+            <th>{{user.password}}</th>
+            <th>{{user.birthday}}</th>
+            <th>{{user.role.role}}</th>
+        </tr>
+    </table>
+</main>

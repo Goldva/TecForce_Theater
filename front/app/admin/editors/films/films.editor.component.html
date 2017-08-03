@@ -1,0 +1,31 @@
+<main>
+    <h1>Редактор фильмов</h1>
+    <form name="form-film" class="film-form" (submit)="onSubmit()">
+        <div>
+            <label for="title">Title</label>
+            <input id="title" type="text" class="form-control" name="title"
+                   [(ngModel)]="editorFilm.title" placeholder="title" #title="ngModel" required>
+        </div>
+        <div>
+            <label for="duration">Duration</label>
+            <input id="duration" type="number" class="form-control" name="duration"
+                   [(ngModel)]="editorFilm.duration" placeholder="duration" #duration="ngModel" required>
+        </div>
+        <div>
+            <label for="price">Price</label>
+            <input id="price" type="number" class="form-control" name="price"
+                   [(ngModel)]="editorFilm.price" placeholder="price" #price="ngModel" required>
+        </div>
+        <button *ngIf="!selectedFilm" type="submit" [(ngModel)]="model.createButton"
+                (click)="model.createButton=true" name="create" ngDefaultControl>Create film</button>
+        <button *ngIf="selectedFilm" type="submit" [(ngModel)]="model.editorButton"
+                (click)="model.editorButton=true" name="editor" ngDefaultControl>
+            Edit film
+        </button>
+        <button *ngIf="selectedFilm" [(ngModel)]="model.deleteButton"
+                (click)="onDelete()" name="delete" ngDefaultControl>
+            Delete film
+        </button>
+
+    </form>
+</main>

@@ -1,0 +1,39 @@
+<main>
+    <h1>Редактор залов</h1>
+
+    <form name="form-hall" class="hall" (submit)="onSubmit()">
+        <div>
+            <label for="hallName">Hall name</label>
+            <input id="hallName" type="text" class="form-control" name="hallName"
+                   [(ngModel)]="editorHall.hallName" placeholder="hallName" #hallName="ngModel" required>
+        </div>
+        <div>
+            <label for="ratioVipPlace">Ratio vip places</label>
+            <input id="ratioVipPlace" type="number" class="form-control" name="ratioVipPlace"
+                   [(ngModel)]="editorHall.ratioVipPlace" placeholder="ratioVipPlace" #ratioVipPlace="ngModel" required>
+        </div>
+        <div>
+            <label for="ratioOrdinaryPlace">Ratio ordinary places</label>
+            <input id="ratioOrdinaryPlace" type="number" class="form-control" name="ratioOrdinaryPlace"
+                   [(ngModel)]="editorHall.ratioOrdinaryPlace" placeholder="ratioOrdinaryPlace"
+                   #ratioOrdinaryPlace="ngModel" required>
+        </div>
+
+        <div>
+            <label for="countPlaces">Count places</label>
+            <input id="countPlaces" type="number" class="form-control" name="countPlaces" (blur)="onSubmitCountPlaces()"
+                   [(ngModel)]="model.countPlaces" placeholder="countPlaces"
+                   #countPlaces="ngModel" required>
+        </div>
+
+        <places-list *ngIf="selectedHall ||(editorHall.places && editorHall.places.length > 0)" (selectPlace)="selectPlace($event)"
+                     [hall]="editorHall"></places-list>
+
+        <button *ngIf="!selectedHall" type="submit" [(ngModel)]="model.createButton"
+                (click)="model.createButton=true" name="create" ngDefaultControl>Create hall</button>
+        <button *ngIf="selectedHall" type="submit" [(ngModel)]="model.editorButton"
+                (click)="model.editorButton=true" name="editor" ngDefaultControl>Edit hall</button>
+        <button *ngIf="selectedHall" [(ngModel)]="model.deleteButton"
+                (click)="onDelete()" name="delete" ngDefaultControl>Delete hall</button>
+    </form>
+</main>

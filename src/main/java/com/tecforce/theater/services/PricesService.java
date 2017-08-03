@@ -8,6 +8,9 @@ import java.util.*;
 
 @Service
 public class PricesService {
+    private final double FREE_TICKET = 1;
+    private final double BIRTHDAY_STOCK = 0.5;
+    private final double STOCK_FOR_CHILDREN = 0.25;
 
     private User user = null;
     private List<String> stocksList = new ArrayList<>();
@@ -24,7 +27,7 @@ public class PricesService {
         double stock = 1;
 
         if (ticket.isIs6ThTicket()) {
-            stock = 0;
+            stock -= FREE_TICKET;
             stocksList.add("При покупки 5-и билетов, 6-ой бесплатно");
         } else {
             stock -= freeTicket();
@@ -59,11 +62,17 @@ public class PricesService {
     }
 
     private double birthdayStock(){
-        Date today = new Date();
+        GregorianCalendar today = new GregorianCalendar();
+        today.setTime(new Date());
+        Calendar birthday = new GregorianCalendar();
+        birthday.setTime(user.getBirthday());
         double stock =  0;
-        if (today.equals(user.getBirthday())){
-            stock = 0.5;
-            stocksList.add("В день рождения скидка 50%");
+        if (today.get(Calendar.MONTH) == birthday.get(Calendar.MONTH)){
+            if (today.get(Calendar.DAY_OF_MONTH) == birthday.get(Calendar.DAY_OF_MONTH)){
+                stock = BIRTHDAY_STOCK;
+                stocksList.add("В день рождения скидка 50%");
+
+            }
         }
         return stock;
     }
@@ -74,7 +83,7 @@ public class PricesService {
         birthday.setTime(user.getBirthday());
         double stock = 0;
         if (calcYears(birthday, today) < 14){
-            stock = 0.25;
+            stock = STOCK_FOR_CHILDREN;
             stocksList.add("Детям до 14 дет скидка 25%");
         }
         return stock;
@@ -97,7 +106,7 @@ public class PricesService {
         Random r = new Random();
         double stock = 0;
         if (r.nextInt(10) < 1){
-            stock = 1;
+            stock = FREE_TICKET;
             stocksList.add("С вероятностью 10% вы можете получить билет бесплатно");
         }
         return stock;
@@ -111,7 +120,7 @@ public class PricesService {
         double stock = 0;
         if (is10ThTicket){
             if (new Random().nextBoolean()){
-                stock = 1;
+                stock = FREE_TICKET;
                 stocksList.add("Каждый 10-ый былет вы можете получить бесплатно");
             }
         }

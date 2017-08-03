@@ -3,11 +3,14 @@ package com.tecforce.theater.data.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "hall")
+//@OnDelete(action = OnDeleteAction.CASCADE)
 public class Hall {
     @Id
     @Column(name = "hall_id")
@@ -22,14 +25,25 @@ public class Hall {
     private double ratioVipPlace;
 
     @ManyToMany(
-            mappedBy = "halls",
-            fetch = FetchType.EAGER
+            fetch = FetchType.EAGER,
+            cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )
+    @JoinTable(name = "session_hall",
+            joinColumns = @JoinColumn(name="hall_id"),
+            inverseJoinColumns = @JoinColumn(name = "session_id"))
     @JsonIgnore
     private Set<Session> sessions = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hallPlace")
-    private Set<Place> places = new HashSet<>();
+
+
+    @OneToMany(
+            fetch = FetchType.EAGER, mappedBy = "hallPlace",
+            cascade = CascadeType.ALL,
+            orphanRemoval=true
+    )
+    private List<Place> places = new ArrayList<>();
+
+
 
     @Transient
     private double vipPrice;
@@ -64,8 +78,12 @@ public class Hall {
         this.ratioVipPlace = ratioVipPlace;
     }
 
-    public Set<Place> getPlaces() {
+    public List<Place> getPlaces() {
         return places;
+    }
+
+    public void setPlaces(List<Place> places) {
+        this.places = places;
     }
 
     public double getVipPrice() {
@@ -92,6 +110,10 @@ public class Hall {
 
     public void setOrdinaryPrice(double ordinaryPrice) {
         this.ordinaryPrice = ordinaryPrice * getRatioOrdinaryPlace();
+    }
+
+    public void addPlace(Place place){
+        getPlaces().add(place);
     }
 
     @Override

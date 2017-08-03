@@ -6,8 +6,8 @@ import 'rxjs/operator/catch'
 import 'rxjs/Observable/throw'
 
 import { sessions } from '../datatest/data-sessions';
-import { Session } from '../session';
-import {Film} from "../film";
+import { Session } from '../entities/session';
+import {Film} from "../entities/film";
 
 @Injectable()
 export class SessionsService{

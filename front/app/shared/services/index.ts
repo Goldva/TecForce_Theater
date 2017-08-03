@@ -6,3 +6,4 @@ export * from './session.service';
 export * from './films.service';
 export * from './place.service';
 export * from './ticket.service';
+export * from './editors/editor.reload.service';

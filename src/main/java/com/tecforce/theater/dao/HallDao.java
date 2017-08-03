@@ -20,11 +20,22 @@ public class HallDao {
     }
 
     public void updateHall(Hall hall) {
-        sessionFactory.getCurrentSession().update(hall);
+        sessionFactory.getCurrentSession().merge(hall);
     }
 
     public Hall getHallById(long hallId) {
         return sessionFactory.getCurrentSession().get(Hall.class, hallId);
+    }
+
+    public Hall getHall(Hall hall) {
+        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<Hall> criteria = builder.createQuery(Hall.class);
+        Root<Hall> root = criteria.from(Hall.class);
+
+        criteria.select(root).where(builder.equal(root.get("hallName"), hall.getHallName()));
+
+        List<Hall> result = sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
+        return result.size() == 0 ? null : result.get(0);
     }
 
     public List<Hall> getAllHalls() {
@@ -36,8 +47,10 @@ public class HallDao {
         return sessionFactory.getCurrentSession().createQuery(query).getResultList();
     }
 
-    public void deleteHall(Hall hall) {
-        sessionFactory.getCurrentSession().delete(hall);
+    public void deleteHall(long hallId) {
+        Hall hall = getHallById(hallId);
+        if (hall != null) {
+            sessionFactory.getCurrentSession().delete(hall);
+        }
     }
-
 }
