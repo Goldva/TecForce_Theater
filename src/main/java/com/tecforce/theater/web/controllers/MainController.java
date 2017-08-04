@@ -12,18 +12,11 @@ public class MainController {
 
     @RequestMapping(value = {"/"})
     public ModelAndView profile() throws IOException {
-        ModelAndView model = new ModelAndView("index.html");
-        return model;
+        return new ModelAndView("index.html");
     }
 
-
-    @RequestMapping(value = {"/start/{fileJS}"})
+    @RequestMapping(value = {"/{fileJS}"})
     public ModelAndView fileJS(@PathVariable String fileJS) throws IOException {
         return new ModelAndView(fileJS + ".js");
-    }
-
-    @RequestMapping(value = {"/start/css/{fileCSS}"})
-    public ModelAndView fileCSS(@PathVariable String fileCSS) throws IOException {
-        return new ModelAndView("css/" + fileCSS + ".css");
     }
 }

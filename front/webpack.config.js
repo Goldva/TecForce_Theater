@@ -11,7 +11,7 @@ module.exports = {
     },
     output: {
         path: path.resolve('dist'),
-        publicPath: 'start/',
+        publicPath: './',
         filename: '[name].[hash].js'
     },
     resolve: {
@@ -50,7 +50,7 @@ module.exports = {
     plugins: [
         new webpack.ContextReplacementPlugin(
             /angular(\|\/)core(\|\/)(esm(\|\/)src|src)(\|\/)linker/,
-            path.resolve('./'), // каталог с исходными файлами
+            path.resolve('./app'), // каталог с исходными файлами
             {} // карта маршрутов
         ),
 
@@ -59,9 +59,8 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            template: 'index.html'
+            template: 'app/index.html'
         }),
-        new ExtractTextPlugin('css/[name].[hash].css'),
         new webpack.NoEmitOnErrorsPlugin(),
 
         new webpack.optimize.UglifyJsPlugin({
