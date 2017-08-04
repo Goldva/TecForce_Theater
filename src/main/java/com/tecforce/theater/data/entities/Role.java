@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements EntityInterface{
     @Id
     @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_role_id_seq")
@@ -13,6 +13,7 @@ public class Role {
     @Column(name = "role")
     private String role;
 
+    @Override
     public long getId() {
         return id;
     }

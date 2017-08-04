@@ -1,11 +1,13 @@
 package com.tecforce.theater.web.controllers.editors;
 
+import com.tecforce.theater.annotations.Halls;
+import com.tecforce.theater.annotations.Sessions;
+import com.tecforce.theater.data.entities.EntityInterface;
 import com.tecforce.theater.data.entities.Hall;
 import com.tecforce.theater.data.entities.Session;
 import com.tecforce.theater.data.entities.User;
-import com.tecforce.theater.services.HallService;
-import com.tecforce.theater.services.PricesService;
-import com.tecforce.theater.services.SessionService;
+import com.tecforce.theater.services.DataServices.DataServiceInterface;
+import com.tecforce.theater.services.DataServices.PricesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -20,21 +22,23 @@ public class HallEditorController {
     @Autowired
     private PricesService pricesService;
     @Autowired
-    private SessionService sessionService;
+    @Sessions
+    private DataServiceInterface sessionService;
     @Autowired
-    private HallService hallService;
+    @Halls
+    private DataServiceInterface hallService;
 
 
     @RequestMapping(value = "/editorHalls", method = RequestMethod.GET)
-    public @ResponseBody List<Hall> getHalls() throws IOException {
-        return hallService.getAllHalls();
+    public @ResponseBody List<EntityInterface> getHalls() throws IOException {
+        return hallService.getAll();
     }
 
     @RequestMapping(value = "/editorHalls/sessionId={sessionId}", method = RequestMethod.POST)
     public @ResponseBody Set<Hall> getHallFilms(@PathVariable long sessionId, @RequestBody User user) throws IOException {
         if (user.equals(new User()))
             user = null;
-        Session session = sessionService.getSessionById(sessionId);
+        Session session = (Session) sessionService.getById(sessionId);
         Set<Hall> halls = session.getHalls();
         double price = session.getPrice();
 
@@ -44,18 +48,19 @@ public class HallEditorController {
     @RequestMapping(value = "/editorHalls", method = RequestMethod.POST)
     @ResponseStatus(value= HttpStatus.OK)
     public void createHall(@RequestBody Hall hall) throws IOException {
-        hallService.addHall(hall);
+        hallService.add(hall);
     }
 
     @RequestMapping(value = "/editorHalls/{hallId}", method = RequestMethod.DELETE)
     @ResponseStatus(value= HttpStatus.OK)
     public void deleteHall(@PathVariable long hallId) throws IOException {
-        hallService.deleteHall(hallId);
+        hallService.delete(hallId);
     }
 
     @RequestMapping(value = "/editorHalls", method = RequestMethod.PUT)
     @ResponseStatus(value= HttpStatus.OK)
     public void updateHall(@RequestBody Hall hall) throws IOException {
-        hallService.updateHall(hall);
+        hall.setSessions(((Hall)hallService.getById(hall.getId())).getSessions());                                              //TODO Написать слой DTO
+        hallService.update(hall);
     }
 }

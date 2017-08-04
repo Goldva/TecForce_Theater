@@ -1,7 +1,10 @@
 package com.tecforce.theater.web.controllers;
 
+import com.tecforce.theater.annotations.Users;
+import com.tecforce.theater.data.entities.EntityInterface;
 import com.tecforce.theater.data.entities.User;
-import com.tecforce.theater.services.UserService;
+import com.tecforce.theater.services.DataServices.DataServiceInterface;
+import com.tecforce.theater.services.DataServices.UsersServices.Authenticate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,21 +16,25 @@ import java.util.List;
 @Controller
 public class UserController {
     @Autowired
-    private UserService userService;
+    @Users
+    private DataServiceInterface userService;
+
+    @Autowired
+    private Authenticate authenticate;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public @ResponseBody User ticketsSelection(@RequestBody User user) throws IOException {
-        return userService.authenticate(user);
+        return authenticate.authenticate(user);
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public @ResponseBody List<User> getUsers() throws IOException {
-        return userService.getAllUsers();
+    public @ResponseBody List<EntityInterface> getUsers() throws IOException {
+        return userService.getAll();
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     @ResponseStatus(value= HttpStatus.OK)
     public void createUser(@RequestBody User user) throws IOException {
-        userService.addUser(user);
+        userService.add(user);
     }
 }

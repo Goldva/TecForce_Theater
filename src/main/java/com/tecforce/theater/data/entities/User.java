@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements EntityInterface{
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_user_id_seq")
@@ -24,6 +24,7 @@ public class User {
     @JoinColumn(name = "role_id", referencedColumnName = "role_id", insertable = false, updatable = false)
     private Role role;
 
+    @Override
     public long getId() {
         return id;
     }

@@ -1,5 +1,7 @@
 package com.tecforce.theater.dao;
 
+import com.tecforce.theater.annotations.Halls;
+import com.tecforce.theater.data.entities.EntityInterface;
 import com.tecforce.theater.data.entities.Hall;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,26 +10,38 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class HallDao {
+@Halls
+public class HallDao implements DataDaoInterface {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void addHall(Hall hall) {
-        sessionFactory.getCurrentSession().save(hall);
+    @Override
+    public void add(EntityInterface entity) {
+        sessionFactory.getCurrentSession().save(entity);
     }
 
-    public void updateHall(Hall hall) {
-        sessionFactory.getCurrentSession().merge(hall);
+    @Override
+    public EntityInterface getById(long entityId) {
+        return sessionFactory.getCurrentSession().get(Hall.class, entityId);
     }
 
-    public Hall getHallById(long hallId) {
-        return sessionFactory.getCurrentSession().get(Hall.class, hallId);
+    @Override
+    public List<EntityInterface> getAll() {
+        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<Hall> query = builder.createQuery(Hall.class);
+        Root<Hall> root = query.from(Hall.class);
+        query.select(root);
+
+        return new ArrayList<>(sessionFactory.getCurrentSession().createQuery(query).getResultList());
     }
 
-    public Hall getHall(Hall hall) {
+    @Override
+    public EntityInterface getEntity(EntityInterface entity) {
+        Hall hall = (Hall) entity;
         CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
         CriteriaQuery<Hall> criteria = builder.createQuery(Hall.class);
         Root<Hall> root = criteria.from(Hall.class);
@@ -38,19 +52,21 @@ public class HallDao {
         return result.size() == 0 ? null : result.get(0);
     }
 
-    public List<Hall> getAllHalls() {
-        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
-        CriteriaQuery<Hall> query = builder.createQuery(Hall.class);
-        Root<Hall> root = query.from(Hall.class);
-        query.select(root);
-
-        return sessionFactory.getCurrentSession().createQuery(query).getResultList();
+    @Override
+    public List<EntityInterface> getEntities(EntityInterface entity) {
+        return new ArrayList<>();                                                                                                  //TODO Дописать
     }
 
-    public void deleteHall(long hallId) {
-        Hall hall = getHallById(hallId);
-        if (hall != null) {
-            sessionFactory.getCurrentSession().delete(hall);
+    @Override
+    public void update(EntityInterface entity) {
+        sessionFactory.getCurrentSession().merge(entity);
+    }
+
+    @Override
+    public void delete(long entityId) {
+        EntityInterface entity = getById(entityId);
+        if (entity != null) {
+            sessionFactory.getCurrentSession().delete(entity);
         }
     }
 }

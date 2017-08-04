@@ -1,5 +1,7 @@
 package com.tecforce.theater.dao;
 
+import com.tecforce.theater.annotations.Places;
+import com.tecforce.theater.data.entities.EntityInterface;
 import com.tecforce.theater.data.entities.Place;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,23 +11,39 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 @Repository
-public class PlaceDao {
+@Places
+public class PlaceDao implements DataDaoInterface{
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void addPlace(Place place) {
-        sessionFactory.getCurrentSession().save(place);
+    @Override
+    public void add(EntityInterface entity) {
+        sessionFactory.getCurrentSession().save(entity);
     }
 
-    public Place getPlaceById(long placeId) {
-        return sessionFactory.getCurrentSession().get(Place.class, placeId);
+    @Override
+    public EntityInterface getById(long entityId) {
+        return sessionFactory.getCurrentSession().get(Place.class, entityId);
     }
 
-    public Place getPlace(Place place) {
+    @Override
+    public List<EntityInterface> getAll() {
+        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<Place> query = builder.createQuery(Place.class);
+        Root<Place> root = query.from(Place.class);
+        query.select(root);
+
+        return new ArrayList<>(sessionFactory.getCurrentSession().createQuery(query).getResultList());
+    }
+
+    @Override
+    public EntityInterface getEntity(EntityInterface entity) {
+        Place place = (Place) entity ;
         CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
         CriteriaQuery<Place> criteria = builder.createQuery(Place.class);
         Root<Place> root = criteria.from(Place.class);
@@ -42,18 +60,16 @@ public class PlaceDao {
         return result.size() == 0 ? null : result.get(0);
     }
 
-    public List<Place> getAllPlaces() {
-        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
-        CriteriaQuery<Place> query = builder.createQuery(Place.class);
-        Root<Place> root = query.from(Place.class);
-        query.select(root);
-
-        return sessionFactory.getCurrentSession().createQuery(query).getResultList();
+    @Override
+    public List<EntityInterface> getEntities(EntityInterface entity) {
+        return new ArrayList<>();                                                                                                   //TODO Дописать
     }
 
-    public void deletePlace(Place place) {
-        sessionFactory.getCurrentSession().delete(place);
+    @Override
+    public void update(EntityInterface entity) {}                                                                                   //TODO Дописать
+
+    @Override
+    public void delete(long entityId) {
+        sessionFactory.getCurrentSession().delete(entityId);
     }
-
-
 }

@@ -51,6 +51,7 @@ export class HallService{
     }
 
     update(hall: Hall): Observable<Hall> {
+        console.log(hall);
         return this.http.put(this.apiUrl, hall)
             .catch(this.handleError);
     }

@@ -1,4 +1,5 @@
 import {Place} from "./place";
+import {Session} from "./session";
 export class Hall {
     public id: number;
     public hallName: string;
@@ -7,4 +8,5 @@ export class Hall {
     public vipPrice: number;
     public ordinaryPrice: number;
     public places: Place[];
+    public sessions: Session[];
 }

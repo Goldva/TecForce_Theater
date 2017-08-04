@@ -1,7 +1,8 @@
 package com.tecforce.theater.services.SecurityServices;
 
+import com.tecforce.theater.annotations.Users;
 import com.tecforce.theater.data.entities.User;
-import com.tecforce.theater.services.UserService;
+import com.tecforce.theater.services.DataServices.DataServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,11 +17,12 @@ import java.util.Set;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private UserService userService;
+    @Users
+    private DataServiceInterface userService;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userService.getUserById(Long.valueOf(s));
+        User user = (User) userService.getById(Long.valueOf(s));
         Set<GrantedAuthority> roles = new HashSet();
         roles.add(new SimpleGrantedAuthority("Admin"));
 

@@ -10,8 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "hall")
-//@OnDelete(action = OnDeleteAction.CASCADE)
-public class Hall {
+public class Hall implements EntityInterface{
     @Id
     @Column(name = "hall_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_hall_id_seq")
@@ -24,32 +23,25 @@ public class Hall {
     @Column(name = "ratio_vip_place")
     private double ratioVipPlace;
 
-    @ManyToMany(
-            fetch = FetchType.EAGER,
-            cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
-    )
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "session_hall",
             joinColumns = @JoinColumn(name="hall_id"),
             inverseJoinColumns = @JoinColumn(name = "session_id"))
     @JsonIgnore
     private Set<Session> sessions = new HashSet<>();
 
-
-
-    @OneToMany(
-            fetch = FetchType.EAGER, mappedBy = "hallPlace",
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hallPlace",
             cascade = CascadeType.ALL,
-            orphanRemoval=true
-    )
+            orphanRemoval=true)
     private List<Place> places = new ArrayList<>();
-
-
 
     @Transient
     private double vipPrice;
     @Transient
     private double ordinaryPrice;
 
+    @Override
     public long getId() {
         return id;
     }
@@ -91,13 +83,7 @@ public class Hall {
     }
 
     public void setVipPrice(double vipPrice) {
-        this.vipPrice = vipPrice * getRatioVipPlace();
-    }
-
-    public void applyStock(double stock){
-        ordinaryPrice *= stock;
-        vipPrice *= stock;
-
+        this.vipPrice = vipPrice;
     }
 
     public double getPriceForPlace(boolean isVip){
@@ -109,11 +95,19 @@ public class Hall {
     }
 
     public void setOrdinaryPrice(double ordinaryPrice) {
-        this.ordinaryPrice = ordinaryPrice * getRatioOrdinaryPlace();
+        this.ordinaryPrice = ordinaryPrice;
     }
 
     public void addPlace(Place place){
         getPlaces().add(place);
+    }
+
+    public Set<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(Set<Session> sessions) {
+        this.sessions = sessions;
     }
 
     @Override
@@ -129,35 +123,5 @@ public class Hall {
     @Override
     public int hashCode() {
         return hallName != null ? hallName.hashCode() : 0;
-    }
-
-    public boolean getTypePlace(int numberPlace){
-        Place needPlace = new Place();
-        needPlace.setHallId(getId());
-        needPlace.setPlace(numberPlace);
-        for (Place place : places) {
-            if (needPlace.equals(place)) {
-                return place.isVipPlace();
-            }
-        }
-        return false;                                           //TODO: Написать и кидать Exception
-    }
-
-    public double getRatio(int numberPlace){
-        Place searchPlace = new Place();
-        searchPlace.setHallId(getId());
-        searchPlace.setPlace(numberPlace);
-        Place result = null;
-        for (Place place : places) {
-            result = place;
-            if (result.equals(searchPlace)) {
-                break;
-            }
-        }
-        if (result.isVipPlace()){
-            return getRatioVipPlace();
-        }else {
-            return getRatioOrdinaryPlace();
-        }
     }
 }

@@ -8,11 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(
-        name = "sessions",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"film_id", "time"})}
-)
-public class Session {
+@Table(name = "sessions",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"film_id", "time"})})
+public class Session implements EntityInterface{
     @Id
     @Column(name = "session_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_session_id_seq")
@@ -34,6 +32,7 @@ public class Session {
             inverseJoinColumns = {@JoinColumn(name = "hall_id")})
     private Set<Hall> halls = new HashSet<>();
 
+    @Override
     public long getId() {
         return id;
     }

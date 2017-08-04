@@ -1,11 +1,10 @@
-package com.tecforce.theater.dao;
+package com.tecforce.theater.services.DataServices;
 
 import com.tecforce.theater.data.entities.EntityInterface;
 
 import java.util.List;
 
-public interface DataDaoInterface {
-
+public interface DataServiceInterface {
     void add(EntityInterface entity);
 
     EntityInterface getById(long entityId);
@@ -19,4 +18,5 @@ public interface DataDaoInterface {
     void update(EntityInterface entity);
 
     void delete(long entityId);
+
 }

@@ -8,12 +8,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "statistics")
-public class Ticket {
+public class Ticket implements EntityInterface{
     @Id
     @Column(name = "statistics_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_statistics_id_seq")
     @SequenceGenerator(name = "my_statistics_id_seq", sequenceName = "statistics_id_seq", allocationSize = 1)
-    private long statisticsId;
+    private long id;
     @Column(name = "user_id")
     private long userId;
     @Column(name = "session_id")
@@ -47,8 +47,9 @@ public class Ticket {
     @JoinColumn(name = "place_id", referencedColumnName = "place_id", insertable = false, updatable = false)
     private Place place;
 
-    public long getStatisticsId() {
-        return statisticsId;
+    @Override
+    public long getId() {
+        return id;
     }
 
     public long getUserId() {
@@ -88,7 +89,7 @@ public class Ticket {
     }
 
     public void setPrice(double price) {
-        this.price = new BigDecimal(price).setScale(2, RoundingMode.UP).doubleValue();
+        this.price = new BigDecimal(price).setScale(2, RoundingMode.UP).doubleValue();                          //TODO Перенести округление
     }
 
     public List<String> getStocks() {

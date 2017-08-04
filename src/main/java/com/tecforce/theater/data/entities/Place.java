@@ -5,11 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(
-        name = "places",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"place", "hall_id"})}
-)
-public class Place {
+@Table(name = "places",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"place", "hall_id"})})
+public class Place implements EntityInterface{
     @Id
     @Column(name = "place_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_places_id_seq")
@@ -28,23 +26,6 @@ public class Place {
     private Hall hallPlace;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Place place1 = (Place) o;
-
-        if (place != place1.place) return false;
-        return hallId == place1.hallId;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = place;
-        result = 31 * result + (int) (hallId ^ (hallId >>> 32));
-        return result;
-    }
-
     public long getId() {
         return id;
     }
@@ -79,6 +60,25 @@ public class Place {
 
     public void setHallPlace(Hall hallPlace) {
         this.hallPlace = hallPlace;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Place place1 = (Place) o;
+
+        if (place != place1.place) return false;
+        return hallId == place1.hallId;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = place;
+        result = 31 * result + (int) (hallId ^ (hallId >>> 32));
+        return result;
     }
 
 }

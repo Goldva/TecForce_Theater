@@ -1,4 +1,4 @@
-package com.tecforce.theater.services;
+package com.tecforce.theater.services.DataServices;
 
 import com.tecforce.theater.data.entities.*;
 import org.springframework.stereotype.Service;
@@ -50,15 +50,16 @@ public class PricesService {
                 double stock = 1;
                 stock -= birthdayStock();
                 stock -= stockForChildren();
-                hall.applyStock(stock);
+                hall.setOrdinaryPrice(hall.getOrdinaryPrice() * stock);
+                hall.setVipPrice(hall.getVipPrice() * stock);
             }
         }
         return halls;
     }
 
     private void pricesForTypePlaces(Hall hall, double filmPrice){
-        hall.setVipPrice(filmPrice);
-        hall.setOrdinaryPrice(filmPrice);
+        hall.setVipPrice(filmPrice * hall.getRatioVipPlace());
+        hall.setOrdinaryPrice(filmPrice * hall.getRatioOrdinaryPlace());
     }
 
     private double birthdayStock(){

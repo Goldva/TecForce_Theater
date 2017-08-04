@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "films")
-public class Film {
+public class Film implements EntityInterface{
     @Id
     @Column(name = "film_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_film_id_seq")
@@ -22,6 +22,7 @@ public class Film {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "film")
     private Set<Session> sessions = new HashSet<>();
 
+    @Override
     public long getId() {
         return id;
     }

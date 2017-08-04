@@ -1,9 +1,10 @@
 package com.tecforce.theater.web.controllers;
 
+import com.tecforce.theater.annotations.*;
 import com.tecforce.theater.data.entities.Hall;
 import com.tecforce.theater.data.entities.Place;
 import com.tecforce.theater.data.entities.Session;
-import com.tecforce.theater.services.*;
+import com.tecforce.theater.services.DataServices.DataServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,28 +17,33 @@ import java.util.Set;
 @Controller
 public class TestController {
     @Autowired
-    private FilmService filmService;
+    @Films
+    private DataServiceInterface filmService;
 
     @Autowired
-    private UserService userService;
+    @Users
+    private DataServiceInterface userService;
 
     @Autowired
-    private SessionService sessionService;
+    @Sessions
+    private DataServiceInterface sessionService;
 
     @Autowired
-    private HallService hallService;
+    @Halls
+    private DataServiceInterface hallService;
 
     @Autowired
-    private PlaceService placeService;
+    @Places
+    private DataServiceInterface placeService;
 
     @RequestMapping(value = {"/getSession"})
     public ModelAndView getSession() throws IOException {
         ModelAndView model = new ModelAndView("index.jsp");
-        Session session = sessionService.getSessionById(2);
+        Session session = (Session) sessionService.getById(2);
 //        Set<Film> films = session.getFilms();
         Set<Hall> halls= session.getHalls();
         Hall hall = halls.iterator().next();
-        hallService.updateHall(hall);
+        hallService.update(hall);
         session.getPrice();
         return model;
     }
@@ -50,7 +56,7 @@ public class TestController {
 //            user.setUsername("Login" + i);
 //            user.setPassword("Password" + i);
 //            user.setBirthday(new Date());
-//            userService.addUser(user);
+//            userService.add(user);
 //        }
 //
 //        for (int i = 0; i < 3; i++) {
@@ -72,7 +78,7 @@ public class TestController {
                 hall.addPlace(place);
             }
 
-            hallService.addHall(hall);
+            hallService.add(hall);
         }
 
 //        Hall hall = hallService.getHallById(15);
@@ -80,7 +86,7 @@ public class TestController {
 //            Place place = new Place();
 //            place.setPlace(j);
 //            place.setHallId(hall.getId());
-//            hall.addPlace(place);
+//            hall.add(place);
 //        }
 //
 //        hallService.updateHall(hall);
@@ -90,7 +96,7 @@ public class TestController {
 //            Place place = new Place();
 //            place.setPlace(i);
 //            place.setHallId(1);
-//            placeService.addPlace(place);
+//            placeService.add(place);
 //        }
 
 //
@@ -99,17 +105,17 @@ public class TestController {
 //            session.setTime(new Time(1111111111 * (i%3)));
 //            session.setFilmId(i%3 +1);
 //
-//            Session searchSession = sessionService.getSession(session);
+//            Session searchSession = sessionService.getEntity(session);
 //            if (searchSession != null){
 //                session = searchSession;
 //                Hall hall = hallService.getHallById(i % 5 + 1);
 //                session.addHall(hall);
-//                sessionService.updateSession(session);
+//                sessionService.update(session);
 //            }else {
 //
 //                Hall hall = hallService.getHallById(i % 5 + 1);
 //                session.addHall(hall);
-//                sessionService.addSession(session);
+//                sessionService.add(session);
 //            }
 //        }
 
