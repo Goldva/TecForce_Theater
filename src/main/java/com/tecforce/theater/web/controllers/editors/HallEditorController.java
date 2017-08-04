@@ -1,10 +1,8 @@
 package com.tecforce.theater.web.controllers.editors;
 
 import com.tecforce.theater.annotations.Halls;
-import com.tecforce.theater.annotations.Sessions;
 import com.tecforce.theater.data.entities.EntityInterface;
 import com.tecforce.theater.data.entities.Hall;
-import com.tecforce.theater.data.entities.Session;
 import com.tecforce.theater.data.entities.User;
 import com.tecforce.theater.services.DataServices.DataServiceInterface;
 import com.tecforce.theater.services.DataServices.PricesService;
@@ -22,9 +20,6 @@ public class HallEditorController {
     @Autowired
     private PricesService pricesService;
     @Autowired
-    @Sessions
-    private DataServiceInterface sessionService;
-    @Autowired
     @Halls
     private DataServiceInterface hallService;
 
@@ -38,11 +33,7 @@ public class HallEditorController {
     public @ResponseBody Set<Hall> getHallFilms(@PathVariable long sessionId, @RequestBody User user) throws IOException {
         if (user.equals(new User()))
             user = null;
-        Session session = (Session) sessionService.getById(sessionId);
-        Set<Hall> halls = session.getHalls();
-        double price = session.getPrice();
-
-        return pricesService.getPricesOfHallsForFilm(halls, price, user);
+        return pricesService.getPrices(sessionId, user);
     }
 
     @RequestMapping(value = "/editorHalls", method = RequestMethod.POST)

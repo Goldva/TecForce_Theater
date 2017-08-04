@@ -1,6 +1,8 @@
 package com.tecforce.theater.services.DataServices;
 
+import com.tecforce.theater.annotations.Sessions;
 import com.tecforce.theater.data.entities.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -8,6 +10,10 @@ import java.util.*;
 
 @Service
 public class PricesService {
+    @Autowired
+    @Sessions
+    private DataServiceInterface sessionService;
+
     private final double FREE_TICKET = 1;
     private final double BIRTHDAY_STOCK = 0.5;
     private final double STOCK_FOR_CHILDREN = 0.25;
@@ -15,8 +21,12 @@ public class PricesService {
     private User user = null;
     private List<String> stocksList = new ArrayList<>();
 
-    public void buyTickets(Set<Ticket> tickets){
+    public Set<Hall> getPrices(long sessionId, User user){
+        Session session = (Session) sessionService.getById(sessionId);
+        Set<Hall> halls = session.getHalls();
+        double price = session.getPrice();
 
+        return getPricesOfHallsForFilm(halls, price, user);
     }
 
     public Ticket getTicketWithRandomStock(Ticket ticket, User user) throws IOException {
