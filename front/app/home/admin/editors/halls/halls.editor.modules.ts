@@ -1,5 +1,5 @@
 import { NgModule }      from '@angular/core';
-import {ListWithDataModule} from "../../../lists-with-data/list.with.data.module";
+import {ListWithDataModule} from "../../../../lists-with-data/list.with.data.module";
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {HallsEditorComponent} from "./halls.editor.component";

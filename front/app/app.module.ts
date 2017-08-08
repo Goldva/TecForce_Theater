@@ -7,13 +7,11 @@ import {RouterModule} from '@angular/router';
 import { routes } from './app.routes'
 import { AppComponent }   from './app.component';
 import { PosterModule} from './poster/poster.module';
-import { AdminModule } from './admin/admin.modules'
+import {HomeModule} from "./home/home.module";
 
 import { AlertComponent } from './alerts/alert.component';
 import { AuthGuard } from './shared/services/guard/auth.guard';
 import { AlertService, AuthenticationService, UserService } from './shared/services/index';
-import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './login/registration.component';
 
 
 @NgModule({
@@ -23,13 +21,11 @@ import { RegistrationComponent } from './login/registration.component';
         HttpModule,
         RouterModule.forRoot(routes),
         PosterModule,
-        AdminModule
+        HomeModule
     ],
     declarations: [
         AppComponent,
-        LoginComponent,
-        AlertComponent,
-        RegistrationComponent
+        AlertComponent
     ],
     providers: [
         AuthGuard,

@@ -1,24 +1,27 @@
-import {Component, Input, OnChanges} from '@angular/core';
-import {Film} from "../../../shared/entities/film";
-import {EditorReloadService} from "../../../shared/services/editors/editor.reload.service";
-import {FilmsService} from "../../../shared/services/films.service";
-import {Hall} from "../../../shared/entities/hall";
-import {Place} from "../../../shared/entities/place";
-import {HallService} from "../../../shared/services/hall.service";
+import {Component, OnChanges, OnInit} from '@angular/core';
+import {EditorReloadService} from "../../../../shared/services/editors/editor.reload.service";
+import {Hall} from "../../../../shared/entities/hall";
+import {Place} from "../../../../shared/entities/place";
+import {HallService} from "../../../../shared/services/hall.service";
 
 @Component({
     selector: 'hall-editor',
     templateUrl: 'halls.editor.component.html',
     styleUrls: ['halls.editor.component.css']
 })
-export class HallsEditorComponent implements OnChanges{
+export class HallsEditorComponent implements OnChanges, OnInit{
     model: any = {};
-    @Input() selectedHall: Hall;
+    selectedHall: Hall;
     editorHall: Hall;
 
     constructor(private editorReloadService: EditorReloadService,
                 private hallService: HallService
     ){}
+
+    ngOnInit(){
+        this.editorHall = new Hall();
+        this.model.countPlaces = '';
+    }
 
     ngOnChanges(){
         this.editorHall = new Hall();
@@ -27,7 +30,11 @@ export class HallsEditorComponent implements OnChanges{
             this.editorHall = this.selectedHall;
             this.model.countPlaces = this.editorHall.places.length;
         }
+    }
 
+    selectHall(hall: Hall){
+        this.selectedHall = hall;
+        this.ngOnChanges();
     }
 
     selectPlace(place: Place){
@@ -36,6 +43,7 @@ export class HallsEditorComponent implements OnChanges{
 
     onSubmit(){
         if (this.model.createButton){
+            console.log(this.editorHall)
             this.hallService.create(this.editorHall).subscribe(res => {
                 this.editorReloadService.reloadHalls();
             });
@@ -70,5 +78,6 @@ export class HallsEditorComponent implements OnChanges{
         this.hallService.delete(this.selectedHall).subscribe(res => {
             this.editorReloadService.reloadHalls();
         });
+        this.selectedHall = null;
     }
 }

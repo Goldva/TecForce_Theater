@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, Input} from '@angular/core';
+import {Component, Output, EventEmitter, Input, OnInit, OnChanges} from '@angular/core';
 
 import { Hall } from '../../shared/entities/hall';
 import {HallService} from "../../shared/services/hall.service";
@@ -11,7 +11,8 @@ import {EditorReloadService} from "../../shared/services/editors/editor.reload.s
     styleUrls: ['hall.component.css']
 })
 
-export class HallComponent {
+export class HallComponent implements OnInit, OnChanges{
+    title = "Залы";
     @Output() selectHall = new EventEmitter();
     @Input() session: Session;
     halls: Hall[];
@@ -28,6 +29,10 @@ export class HallComponent {
         this.editorReloadService.hallReload$.subscribe(film => {
             this.reload();
         });
+        this.reload();
+    }
+
+    ngOnChanges(){
         this.reload();
     }
 

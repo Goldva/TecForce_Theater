@@ -1,12 +1,16 @@
+h1{
+    margin: .3em;
+}
 .selected {
     background-color: #CFD8DC !important;
-    color: white;
+    color: #607D8B;
 }
 .films {
     margin: 0 0 2em 0;
     list-style-type: none;
     padding: 0;
     width: 15em;
+    color: #222D8B;
 }
 .films li {
     cursor: pointer;
@@ -20,7 +24,7 @@
 }
 .films li.selected:hover {
     background-color: #BBD8DC !important;
-    color: white;
+    color: #222D8B;
 }
 .films li:hover {
     color: #607D8B;

@@ -1,5 +1,5 @@
 <main>
-    <h1>Редактор фильмов</h1>
+    <table-film (selectFilm)="selectFilm($event)"></table-film>
     <form name="form-film" class="film-form" (submit)="onSubmit()">
         <div>
             <label for="title">Title</label>

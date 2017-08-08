@@ -63,6 +63,9 @@ public class UserDao implements DataDaoInterface{
 
     @Override
     public void delete(long entityId) {
-        sessionFactory.getCurrentSession().delete(entityId);
+        EntityInterface entity = getById(entityId);
+        if (entity != null) {
+            sessionFactory.getCurrentSession().delete(entity);
+        }
     }
 }

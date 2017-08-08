@@ -1,0 +1,124 @@
+header {
+    background: #1976D2;
+    height: 56px;
+    min-height: 56px;
+    padding: 0;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.24);
+}
+header h1 {
+    color: white;
+}
+.menu{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    top: -56px;
+}
+.login-button{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 50%;
+}
+.poster-button{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+}
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 97%;
+    height: 56px;
+    font-weight: 400;
+    margin: 0 0 0 10px;
+}
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    background: #1976D2;
+    height: 56px;
+    width: 56px;
+    min-height: 56px;
+    padding: 0;
+}
+.login:hover{
+    position: relative;
+    display: flex;
+    color: #000000;
+    justify-content: center;
+    align-items: center;
+    background: #156ec6;
+    height: 56px;
+    width: 56px;
+}
+.logout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    background: #1976D2;
+    height: 56px;
+    width: 56px;
+    min-height: 56px;
+    padding: 0;
+}
+.logout:hover{
+    position: relative;
+    display: flex;
+    color: #000000;
+    justify-content: center;
+    align-items: center;
+    background: #156ec6;
+    height: 56px;
+    width: 56px;
+}
+
+.admin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    background: #1976D2;
+    height: 56px;
+    width: 56px;
+    min-height: 56px;
+    padding: 0;
+}
+.admin:hover{
+    position: relative;
+    display: flex;
+    color: #000000;
+    justify-content: center;
+    align-items: center;
+    background: #156ec6;
+    height: 56px;
+    width: 56px;
+}
+.poster{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    background: #1976D2;
+    height: 56px;
+    width: 56px;
+    min-height: 56px;
+    padding: 0;
+}
+.admin:hover{
+    position: relative;
+    display: flex;
+    color: #000000;
+    justify-content: center;
+    align-items: center;
+    background: #156ec6;
+    height: 56px;
+    width: 56px;
+}

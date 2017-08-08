@@ -12,6 +12,7 @@ import {EditorReloadService} from "../../shared/services/editors/editor.reload.s
 })
 
 export class SessionsListComponent implements OnChanges{
+    title = "Сеансы";
     @Output() selectSession = new EventEmitter();
     sessions: Session[];
     @Input() film: Film;
@@ -37,7 +38,7 @@ export class SessionsListComponent implements OnChanges{
         if (this.film) {
             this.sessionService.postSearchSessionsForFilm(this.film).subscribe(sessions => {this.sessions = sessions});
         } else {
-            this.sessionService.getFilmSessions().subscribe(sessions => {this.sessions = sessions})
+            this.sessionService.getSessions().subscribe(sessions => {this.sessions = sessions})
         }
     }
 

@@ -11,6 +11,7 @@ import {EditorReloadService} from "../../shared/services/editors/editor.reload.s
     styleUrls: ['table-films.component.css']
 })
 export class TableFilmsComponent implements OnInit{
+    title = "Фильмы";
     films: Film[];
     @Output() selectFilm = new EventEmitter();
     selectedFilm: Film;

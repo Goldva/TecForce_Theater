@@ -1,3 +1,4 @@
+<h1>{{title}}</h1>
 <div class="hall-list">
     <ul class="halls">
         <li *ngFor="let hall of halls"
@@ -6,12 +7,12 @@
             <div>
                 <span class="badge">{{hall.id}}</span>{{hall.hallName}}
                 <div>
-                    <label *ngIf="session">Цена на обычные места: {{hall.ordinaryPrice}} рублей</label>
-                    <label *ngIf="!session">Ставка на обычные: {{hall.ratioOrdinaryPlace}} рублей</label>
+                    <label *ngIf="session">Цена места: {{hall.ordinaryPrice}} руб.</label>
+                    <label *ngIf="!session">Ставка на обычные: {{hall.ratioOrdinaryPlace}} руб.</label>
                 </div>
                 <div>
-                    <label *ngIf="session">Цена на VIP места: {{hall.vipPrice}} рублей</label>
-                    <label *ngIf="!session">Ставка на VIP: {{hall.ratioVipPlace}} рублей</label>
+                    <label *ngIf="session">Цена на VIP: {{hall.vipPrice}} руб.</label>
+                    <label *ngIf="!session">Ставка на VIP: {{hall.ratioVipPlace}} руб.</label>
                 </div>
             </div>
         </li>

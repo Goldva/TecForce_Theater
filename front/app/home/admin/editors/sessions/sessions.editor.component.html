@@ -1,0 +1,32 @@
+<main>
+    <sessions-list (selectSession)="selectSession($event)"></sessions-list>
+    <form name="form-session" class="session-form" (submit)="onSubmit()">
+        <table-film (selectFilm)="selectFilm($event)"></table-film>
+
+        <div class="hall-list">
+            <ul class="halls">
+                <li *ngFor="let hall of halls"
+                    [class.selected]="selectedHalls.has(hall)"
+                    (click)="selectHalls(hall)">
+                    <div>
+                        <span class="badge">{{hall.id}}</span>{{hall.hallName}}
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <label for="time">Время начала</label>
+            <input id="time" type="time" class="form-control" name="time"
+                   [(ngModel)]="editorSession.time" value="11:11" #time="ngModel" required>
+        </div>
+
+        <button *ngIf="!selectedSession" type="submit" [(ngModel)]="model.createButton"
+                (click)="model.createButton=true" name="create" ngDefaultControl>Create session</button>
+        <button *ngIf="selectedSession" type="submit" [(ngModel)]="model.editorButton"
+                (click)="model.editorButton=true" name="editor" ngDefaultControl>Edit session</button>
+        <button *ngIf="selectedSession" [(ngModel)]="model.deleteButton"
+                (click)="onDelete()" name="delete" ngDefaultControl>Delete session</button>
+
+    </form>
+</main>

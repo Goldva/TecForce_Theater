@@ -11,6 +11,7 @@ import {Hall} from "../../shared/entities/hall";
 })
 
 export class PlacesListComponent implements DoCheck{
+    title = "Места";
     @Output() selectPlace = new EventEmitter();
     @Input() hall: Hall;
     places: Place[];

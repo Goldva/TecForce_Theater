@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, DoCheck} from '@angular/core';
 import {User} from "./shared/entities/user";
 
 @Component({
@@ -7,12 +6,10 @@ import {User} from "./shared/entities/user";
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements DoCheck{
     title: string = 'TecForce theater';
-    user = JSON.parse(localStorage.getItem('currentUser')) as User;
-    constructor(private router: Router){}
-
-    onSelect(){
-        this.router.navigate(["poster"])
+    user: User;
+    ngDoCheck(){
+        this.user = JSON.parse(localStorage.getItem('currentUser')) as User;
     }
 }

@@ -1,0 +1,9 @@
+.login-form{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    width: 99%;
+    top: 10%;
+    color: #000;
+}

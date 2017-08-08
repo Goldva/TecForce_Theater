@@ -11,6 +11,7 @@ import {TicketService} from "../../shared/services/ticket.service";
 })
 
 export class SelectedTicketsComponent{
+    title = 'Билеты';
     @Input() tickets: Map<number, Ticket>;
     user: User = JSON.parse(localStorage.getItem('currentUser')) as User;
 

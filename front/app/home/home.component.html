@@ -1,0 +1,17 @@
+<header>
+    <div class="title">
+        <h1>{{title}}</h1>
+    </div>
+    <div class="menu">
+        <div class="poster-button">
+            <a class="poster" routerLink="/poster">Poster</a>
+        </div>
+        <div class="login-button">
+            <a *ngIf="user && user.role.role === 'admin'" class="admin" routerLink="/admin">Editors</a>
+            <a *ngIf="!user" class="login" routerLink="/login">Login</a>
+            <a *ngIf="user" class="logout" (click)="logout()">Logout</a>
+        </div>
+    </div>
+
+    <router-outlet></router-outlet>
+</header>

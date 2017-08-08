@@ -1,11 +1,4 @@
-<header>
-    <h1>{{title}}</h1>
-</header>
+<home></home>
 <main>
-    <nav>
-        <a routerLink="/poster">Poster</a>
-        <a routerLink="/login">Login</a>
-        <a routerLink="/admin" *ngIf="user && user.role.role === 'admin'">Admin</a>
-    </nav>
     <router-outlet></router-outlet>
 </main>

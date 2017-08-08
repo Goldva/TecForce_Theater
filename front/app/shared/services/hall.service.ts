@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, Headers, RequestOptions} from '@angular/http';
 
 import { Hall } from '../entities/hall';
-import { halls } from '../datatest/data-halls';
+// import { halls } from '../datatest/data-halls';
 
 import { Observable } from 'rxjs';
 import 'rxjs/operator/map'
@@ -14,7 +14,7 @@ import {User} from "../entities/user";
 @Injectable()
 export class HallService{
     private apiUrl = 'editorHalls';
-    halls: Hall[] = halls;
+    // halls: Hall[] = halls;
 
     user: User;
 
@@ -64,9 +64,9 @@ export class HallService{
     }
 
 
-    getHallTest(): Hall[]{
-        return this.halls;
-    }
+    // getHallTest(): Hall[]{
+    //     return this.halls;
+    // }
 
     private handleError(error: any){
         console.error('Error', error);

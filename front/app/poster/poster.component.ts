@@ -6,17 +6,7 @@ import {Hall} from "../shared/entities/hall";
 import {Place} from "../shared/entities/place";
 import {Ticket} from "../shared/entities/ticket";
 import {TicketService} from "../shared/services/ticket.service";
-import {SessionsService} from "../shared/services/session.service";
-import {HallService} from "../shared/services/hall.service";
-import {PlaceService} from "../shared/services/place.service";
-import {halls} from "../shared/datatest/data-halls";
-import {List} from "lodash";
-import LinkedList from "typescript-collections/dist/lib/LinkedList";
-import {sessions} from "../shared/datatest/data-sessions";
-import {places} from "../shared/datatest/data-places";
 import {User} from "../shared/entities/user";
-import {tick} from "@angular/core/testing";
-import {EditorReloadService} from "../shared/services/index";
 
 @Component({
     selector: 'poster',

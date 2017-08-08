@@ -9,16 +9,18 @@ import 'rxjs/Observable/throw'
 
 @Injectable()
 export class UserService {
+    private apiUrl = 'users';
+
     constructor(private http: Http) { }
 
     getAll(): Observable<User[]> {
-        return this.http.get('/users', this.jwt())
+        return this.http.get(this.apiUrl, this.jwt())
             .map(res => res.json())
             .catch(this.handleError);
     }
 
     getById(id: number): Observable<User> {
-        return this.http.get('/users/' + id, this.jwt())
+        return this.http.get(this.apiUrl + '/' + id, this.jwt())
             .map(res => res.json())
             .catch(this.handleError);
     }
@@ -27,20 +29,20 @@ export class UserService {
         let headers = new Headers({'Content-Type': 'application/json;charset=UTF-8'});
         let options = new RequestOptions({headers});
         console.log(user);
-        return this.http.post('/users', user, options)
+        return this.http.post(this.apiUrl, user, options)
             .catch(this.handleError);
 
     }
 
     update(user: User): Observable<User> {
-        return this.http.put('/users/' + user.id, user, this.jwt())
+        return this.http.put(this.apiUrl + '/' + user.id, user, this.jwt())
             .catch(this.handleError);
     }
 
     delete(id: number): Observable<User> {
         let headers = new Headers({'Content-Type': 'application/json;charset=UTF-8'});
         let options = new RequestOptions({headers});
-        return this.http.delete('/users/' + id, options)
+        return this.http.delete(this.apiUrl + '/' + id, options)
             .catch(this.handleError);
     }
 
